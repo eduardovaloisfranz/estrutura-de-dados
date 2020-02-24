@@ -13,14 +13,24 @@ public class ImagemUtil {
 		int counter = 0, counterLine = 0;
 		int linesWasFound[] = new int[3];
 		loadPattern();
+		int lineAUX = 0, columnAUX = 0;
 		for(int line = 0; line < imagem.getImage().length; line++) {
 			for(int column = 0; column < imagem.getImage().length; column++) {
-				//if(imagem.getImage()[line][column] == patterns.get(1).getImage()[line][column]) {					
-				//}				
-				//counter++;
-				if(Arrays.asList(imagem).contains(patterns.get(padrao))){
-					return true;
+				
+				if(lineAUX > 3) {
+					lineAUX = 0;
+				}
+				if(columnAUX > 3) {
+					columnAUX = 0;
 				}				
+				if(imagem.getImage()[line][column] == patterns.get(1).getImage()[lineAUX][columnAUX]) {					
+				
+				}
+				System.out.println(patterns.get(padrao).getImage()[lineAUX][columnAUX]);
+								
+				lineAUX++;
+				columnAUX++;
+				//counter++;
 			}
 		}
 		
