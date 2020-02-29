@@ -11,7 +11,7 @@ public class BuscaPorPadrao {
                     String path = args[1];
                     //int pattern = Integer.parseInt(args[2]);
                     if(args.length >= 3){
-                        if()
+                        //if()
                     }
                     
                 }
