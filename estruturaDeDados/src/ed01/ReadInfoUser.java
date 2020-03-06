@@ -30,6 +30,7 @@ public class ReadInfoUser {
 			} while (!file.exists());	
 			file = new File(fileName);
 		}
+		int initialLength = 0;
 		try {
 
 			FileReader fr = new FileReader(file);
@@ -39,15 +40,15 @@ public class ReadInfoUser {
 			while ((line = br.readLine()) != null) {
 				if(line.isEmpty()) {
 					System.out.println("The file is empty");
-				}else if(line.length() != 16) {
-					System.out.println("The file have invalid format, try put in the right pattern");
-				} else if (!line.contains("1") && !line.contains("0")) {
+				}else if (!line.contains("1") && !line.contains("0")) {
 					System.out.println("Invalid characters, the line contains invalid char, only insert 1 and 0");
 				}
 				else {
-					image.addLine(line, counter);					
-				}				
-				counter++;
+					image.addLine(line, counter);
+					counter++;
+				}
+				
+				
 			}
 			br.close();
 			fr.close();			
