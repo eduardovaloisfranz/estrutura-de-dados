@@ -8,10 +8,9 @@ public class ImagemUtil {
 		
 	public static ArrayList<Image> patterns = new ArrayList<>();
 	
-	
+	 
 	public static boolean verificaPadrao(Image imagem, int padrao) {		
-		loadPattern();
-                
+		loadPattern();                
 		int lineAux = 0;
                 int columnAux = 0;
 		for(int line = 0; line < imagem.getImage().length; line++) {
@@ -40,7 +39,7 @@ public class ImagemUtil {
 	}
 	
 	public static int contarPadrao(Image imagem, int padrao) {
-		
+				loadPattern();
                 int counterPattern = 0;
                 int lineAux = 0;
                 int columnAux = 0;
@@ -71,21 +70,21 @@ public class ImagemUtil {
 	public static void loadPattern() {
 		if(patterns.isEmpty()) {
 			Image pattern1 = new Image();
-			pattern1.addLine("010", 0);
-			pattern1.addLine("111", 1);
-			pattern1.addLine("010", 2);
+			pattern1.addPatternLine("010", 0);
+			pattern1.addPatternLine("111", 1);
+			pattern1.addPatternLine("010", 2);
 			patterns.add(pattern1);
 			
 			Image pattern2 = new Image();
-			pattern2.addLine("111", 0);
-			pattern2.addLine("010", 1);
-			pattern2.addLine("010", 2);
+			pattern2.addPatternLine("111", 0);
+			pattern2.addPatternLine("010", 1);
+			pattern2.addPatternLine("010", 2);
 			patterns.add(pattern2);
 			
 			Image pattern3 = new Image();
-			pattern3.addLine("001", 0);
-			pattern3.addLine("010", 1);
-			pattern3.addLine("100", 2);
+			pattern3.addPatternLine("001", 0);
+			pattern3.addPatternLine("010", 1);
+			pattern3.addPatternLine("100", 2);
 			patterns.add(pattern3);	
 		}
 		

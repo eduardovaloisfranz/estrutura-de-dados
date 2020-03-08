@@ -3,33 +3,31 @@ package ed01;
 import java.util.Arrays;
 
 public class Image {
-	public Integer Image[][] = new Integer[100][100];
+	public Integer Image[][];
 	
-
+ 
 	public void addLine(String line, int column) {
-		int index = 0;
-		if(this.Image.length - column < 5 || line.length() < 5) {
-			this.resizeArray2D();
-		}
+		int index = 0;		
 		for(char c : line.toCharArray()) {
 			this.Image[column][index] =  Integer.parseInt(String.valueOf(c));
 			index++;
 			//image.addNumber(Integer.parseInt(String.valueOf(c)));
 			//image.add
 		}
+	}
+	public void addPatternLine(String line, int column) {
+		if(this.Image == null) {
+			this.Image = new Integer[3][3];			
+		}		
+		this.addLine(line, column);
 		
-		
+	}
+	public void addLine(String line, int column, int quantityLines, int quantityColumns) {
+		this.Image = new Integer[quantityLines][quantityColumns];
+		addLine(line, column);
 	}
 	
-	private void resizeArray2D() {
-		Integer[][] tempArray = new Integer[this.Image.length + 60][this.Image.length + 60];
-		for(int i = 0; i < this.Image.length; i++) {
-			for(int j = 0; i < this.Image.length; i++) {
-				tempArray[i][j] = Image[i][j];
-			}
-		}
-		this.Image = tempArray;
-	}
+	
 
 	public void exibirArray() {
 	

@@ -17,7 +17,7 @@ public class ReadInfoUser {
 				System.out.println("Please insert a TXT file ONLY!");
 				path = ReadInfoUser.readString("Insert only path that contains a TXT to read");
 			} while (!path.toLowerCase().endsWith(".txt"));			
-		}
+		} 
 	
 
 		String fileName = path;
@@ -30,7 +30,7 @@ public class ReadInfoUser {
 			} while (!file.exists());	
 			file = new File(fileName);
 		}
-		int initialLength = 0;
+		int quantityOfColumns = 0;
 		try {
 
 			FileReader fr = new FileReader(file);
@@ -39,13 +39,21 @@ public class ReadInfoUser {
 			short counter = 0;
 			while ((line = br.readLine()) != null) {
 				if(line.isEmpty()) {
-					System.out.println("The file is empty");
+					System.out.println("The line is empty");
 				}else if (!line.contains("1") && !line.contains("0")) {
 					System.out.println("Invalid characters, the line contains invalid char, only insert 1 and 0");
 				}
-				else {
-					image.addLine(line, counter);
-					counter++;
+				else {					
+					if(counter == 0) {
+						quantityOfColumns = line.length();
+						//System.out.println(getCountOfLines(path, quantityOfColumns));
+						image.addLine(line, counter, getCountOfLines(path, quantityOfColumns), quantityOfColumns);
+						counter++;
+					}
+					else if(line.length() == quantityOfColumns){
+						image.addLine(line, counter);
+						counter++;
+					}
 				}
 				
 				
@@ -60,6 +68,38 @@ public class ReadInfoUser {
 
 		return image;
 
+	}
+	
+	private static int getCountOfLines(String path, int quantityOfColumns) {
+		int quantity = 0;
+		String fileName = path;
+		File file = new File(fileName);
+		try {
+
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			String line;			
+			while ((line = br.readLine()) != null) {						
+				if(line.isEmpty()) {
+					System.out.println("The line is empty");
+				}else if (!line.contains("1") && !line.contains("0")) {
+					System.out.println("Invalid characters, the line contains invalid char, only insert 1 and 0");
+				}	
+				else if(quantityOfColumns == line.length()) {
+					quantity++;								
+					//System.out.println("Line with more columns if compare to first line");					
+				}		
+				
+				
+			}
+			br.close();
+			fr.close();			
+
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return quantity;
 	}
 
 	public static String readString(String message) {
