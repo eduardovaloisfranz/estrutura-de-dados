@@ -148,6 +148,12 @@ public class ListaComEncadeamento{
 		}
 	}
 	
+	public void clear() {
+		this.first = null;
+		this.last = null;
+		this.counter = 0;
+	}
+	
 	public boolean contains(Integer info) {
 		if(info == null) {
 			throw new NullPointerException("You cant give null info");
