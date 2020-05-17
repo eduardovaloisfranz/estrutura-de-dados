@@ -1,6 +1,7 @@
-package implementacaoTorreHanoi;
+package implementacaoTorreHanoi.Pilha.PilhaComVetor;
 
-import implementacaoPilha.Pilha;
+import implementacaoTorreHanoi.Pilha.Pilha;
+import implementacaoTorreHanoi.Pilha.ObjetoTorre;
 
 public class PilhaVetor<T> implements Pilha<T> {
 	private T[] listOfItems;
@@ -20,7 +21,7 @@ public class PilhaVetor<T> implements Pilha<T> {
 		this.tam = tam;
 		this.listOfItems =  (T[]) new Object[tam];		
 	}		
-	
+	@Override
 	public void push() {		
 		//T obj = new T();
 		ObjetoTorre objT = new ObjetoTorre((this.tam + 6) - this.counter);

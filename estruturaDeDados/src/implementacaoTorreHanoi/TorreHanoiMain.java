@@ -2,36 +2,89 @@ package implementacaoTorreHanoi;
 
 import java.util.Scanner;
 
+import implementacaoTorreHanoi.Pilha.Pilha;
+import implementacaoTorreHanoi.Pilha.ObjetoTorre;
+import implementacaoTorreHanoi.Pilha.PilhaComVetor.PilhaVetor;
+import implementacaoTorreHanoi.Pilha.PilhaComEncadeamento.*;
+
 public class TorreHanoiMain {
-	static PilhaVetor<ObjetoTorre> torre1 = new PilhaVetor<>(3);
-	static PilhaVetor<ObjetoTorre> torre2 = new PilhaVetor<>(3);
-	static PilhaVetor<ObjetoTorre> torre3 = new PilhaVetor<>(3);
+	static Pilha<ObjetoTorre> torre1;
+	static Pilha<ObjetoTorre> torre2;
+	static Pilha<ObjetoTorre> torre3;
 	static int quantityOfMoves = 0; 
 	static Scanner input = new Scanner(System.in);
 	
+	//aviso: se a implementacao nao fosse generica, ficaria melhor, mas tive que dar um jeito!				
 	public static void main(String[] args) {
+		System.out.println("The arguments correctly is: Quantity of items in stack and type of implementation as example bellow");
+		System.out.println("5 continua/dinamica |The quantity of items by default is five when you provided minus than five or doesnt provided nothing");
+		System.out.println("And type of implementation is by default is continuous");
+		int quantityOfItems = 0;
+		String typeOfImplementation = "";
 		int quantityOfArguments = args.length;
-		if(args.length > 1) {
-			System.out.println("You provided more than necessary arguments, the system only needs 1 and you provided " + quantityOfArguments);
-		}else if(args.length == 0) {
-			System.out.println("You dont provided nothing, the items will have 3 elements");
-		}else {				
-		if(tryParseInt(args[0])) {
-			int quantityOfItems = Integer.parseInt(args[0]);
-				if(quantityOfItems < 3) {
-					System.out.println("minus than three is not possible, the elements will have the minimum that is three items by default");					
-				}else if (quantityOfItems >= 3) {
-					System.out.println("Your towers will have " + quantityOfItems + " itens");
-					torre1 = new PilhaVetor<ObjetoTorre>(quantityOfItems);
-					torre2 = new PilhaVetor<ObjetoTorre>(quantityOfItems);
-					torre3 = new PilhaVetor<ObjetoTorre>(quantityOfItems);
-				}
-			}else {
-				System.out.println("You provide something is not a number, thats is" + args[0]);
-			}
+		if(args.length == 0 || args.length == 1) {
+			args = new String[] { "5" , "continua" };
 		}
+		if(args.length > 2) {
+			System.out.println("You provided more than necessary arguments, the system only needs 2 and you provided " + quantityOfArguments);
+			if(tryParseInt(args[0])) {
+				quantityOfItems = Integer.parseInt(args[0]);
+					if(quantityOfItems < 5) {
+						System.out.println("minus than five is not possible, the elements will have the minimum that is five items by default");
+						quantityOfItems = 5;
+					}				
+				}else {
+					System.out.println("You provide something is not a number, thats is" + args[0]);
+				}
+				if(args[1].equalsIgnoreCase("continua")) {
+					typeOfImplementation = "continua";
+				}
+				else if(args[1].equalsIgnoreCase("dinamica")) {
+					typeOfImplementation = "dinamica";
+				}else {
+					typeOfImplementation = "continua";
+					System.out.println("You provided nothing for the type of implementation, the default is gonna be continuous or (continua ptBR)");				
+				}
+		}else if(args.length == 2) {				
+			if(tryParseInt(args[0])) {
+				quantityOfItems = Integer.parseInt(args[0]);
+					if(quantityOfItems < 5) {
+						System.out.println("minus than five is not possible, the elements will have the minimum that is five items by default");
+						quantityOfItems = 5;
+					}				
+				}else {
+					System.out.println("You provide something is not a number, thats is" + args[0]);
+				}
+				if(args[1].equalsIgnoreCase("continua")) {
+					typeOfImplementation = "continua";
+				}
+				else if(args[1].equalsIgnoreCase("dinamica")) {
+					typeOfImplementation = "dinamica";
+				}else {
+					typeOfImplementation = "continua";
+					System.out.println("You provided nothing for the type of implementation, the default is gonna be continuous or (continua ptBR)");				
+				}		
+		}
+		
+		System.out.println("\nQuantity Of items in each stack " + quantityOfItems);
+		System.out.println("\nType of implementation for all those stacks is: : " + typeOfImplementation);
+		
+		
+		setPatternOfGame(quantityOfItems, typeOfImplementation);
 		loadFirstTower();			
 		Menu();
+	}
+	public static void setPatternOfGame(int quantityItens, String typeOfImplementation) {
+		if(typeOfImplementation.equalsIgnoreCase("continua")) {			
+			torre1 = new PilhaVetor<ObjetoTorre>(quantityItens);
+			torre2 = new PilhaVetor<ObjetoTorre>(quantityItens);
+			torre3 = new PilhaVetor<ObjetoTorre>(quantityItens);
+		}
+		else if(typeOfImplementation.equalsIgnoreCase("dinamica")) {			
+			torre1 = new PilhaLista<ObjetoTorre>(quantityItens);
+			torre2 = new PilhaLista<ObjetoTorre>(quantityItens);
+			torre3 = new PilhaLista<ObjetoTorre>(quantityItens);
+		}
 	}
 	public static void Menu() {
 		
@@ -64,7 +117,7 @@ public class TorreHanoiMain {
 				selectedTower = readInt("Type destiny tower that you want: [VALID OPTIONS: 1,2,3]: ");
 			}
 			quantityOfMoves++;
-			play(selectedTower, destinyTower);
+			play(selectedTower, destinyTower);			
 		
 		}while(!wonGame());
 		
@@ -91,10 +144,10 @@ public class TorreHanoiMain {
 		return input.nextInt();		
 	}
 	
-	public static void play(int selectedTower, int destinyTower) {
+	public static void play(int selectedTower, int destinyTower) {		
 		if(!isPossibleAddObject(getTopOfSelectedTower(selectedTower), destinyTower)){
 			System.out.println("You cant put this item to the selected tower because");
-			System.out.println("You can't add because the line is bigger than its predecessor");
+			System.out.println("The line is bigger than its predecessor");
 			System.out.println("Try again!");
 			return;
 		}else {
