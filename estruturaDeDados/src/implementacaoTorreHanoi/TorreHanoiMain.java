@@ -9,8 +9,7 @@ public class TorreHanoiMain {
 	static int quantityOfMoves = 0; 
 	static Scanner input = new Scanner(System.in);
 	
-	public static void main(String[] args) {		
-		System.out.println(args.length);
+	public static void main(String[] args) {
 		int quantityOfArguments = args.length;
 		if(args.length > 1) {
 			System.out.println("You provided more than necessary arguments, the system only needs 1 and you provided " + quantityOfArguments);
