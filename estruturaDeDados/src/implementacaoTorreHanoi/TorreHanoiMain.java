@@ -9,8 +9,7 @@ public class TorreHanoiMain {
 	static int quantityOfMoves = 0; 
 	static Scanner input = new Scanner(System.in);
 	
-	public static void main(String[] args) {
-		args = new String[] {"4"};
+	public static void main(String[] args) {		
 		System.out.println(args.length);
 		int quantityOfArguments = args.length;
 		if(args.length > 1) {
