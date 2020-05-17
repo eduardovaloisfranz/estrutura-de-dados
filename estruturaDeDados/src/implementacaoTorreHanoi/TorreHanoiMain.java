@@ -3,9 +3,9 @@ package implementacaoTorreHanoi;
 import java.util.Scanner;
 
 public class TorreHanoiMain {
-	static PilhaVetor torre1 = new PilhaVetor(3);
-	static PilhaVetor torre2 = new PilhaVetor(3);
-	static PilhaVetor torre3 = new PilhaVetor(3);
+	static PilhaVetor<ObjetoTorre> torre1 = new PilhaVetor<>(3);
+	static PilhaVetor<ObjetoTorre> torre2 = new PilhaVetor<>(3);
+	static PilhaVetor<ObjetoTorre> torre3 = new PilhaVetor<>(3);
 	static int quantityOfMoves = 0; 
 	static Scanner input = new Scanner(System.in);
 	
@@ -22,9 +22,9 @@ public class TorreHanoiMain {
 					System.out.println("minus than three is not possible, the elements will have the minimum that is three items by default");					
 				}else if (quantityOfItems >= 3) {
 					System.out.println("Your towers will have " + quantityOfItems + " itens");
-					torre1 = new PilhaVetor(quantityOfItems);
-					torre2 = new PilhaVetor(quantityOfItems);
-					torre3 = new PilhaVetor(quantityOfItems);
+					torre1 = new PilhaVetor<ObjetoTorre>(quantityOfItems);
+					torre2 = new PilhaVetor<ObjetoTorre>(quantityOfItems);
+					torre3 = new PilhaVetor<ObjetoTorre>(quantityOfItems);
 				}
 			}else {
 				System.out.println("You provide something is not a number, thats is" + args[0]);
