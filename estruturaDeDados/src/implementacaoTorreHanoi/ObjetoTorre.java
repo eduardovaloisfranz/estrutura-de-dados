@@ -5,8 +5,7 @@ public class ObjetoTorre {
 	public ObjetoTorre(int qtd) {
 		for(int i = 0; i < qtd; i++) {
 			this.info += "-";
-		}
-		this.info +="Tam: " + qtd;
+		}		
 	}
 	@Override
 	public String toString() {
