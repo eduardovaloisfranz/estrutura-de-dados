@@ -95,22 +95,7 @@ public class ArvoreBinariaComArray <T>{
 		return altura;
 	}
 	
-	public int getQuantidadeMaxNos() {
-			
-			
-			//int qtdElementosVisualizados = 0;		
-			//do {
-				//System.out.println(qtdElementosProxNivel);
-				//qtdElementosProxNivel*=2;
-		
-				//qtdElementosVisualizados++;
-			//}while(qtdElementosVisualizados < this.counter);
-			
-			
-		
-			
-			//System.out.println(qtdMaximaElementosPorNivel);
-			
+	public int getQuantidadeMaxNos() {			
 			int qtdElementosPorNivel = 1;	
 			int qtdElementosVisualizadosInNivel = 0;
 			int somaElementosPorNivel = 0;
@@ -132,10 +117,30 @@ public class ArvoreBinariaComArray <T>{
 				somaElementosPorNivel++;				
 			}
 				
-			}
+		}
 			
 		return maiorQuantidadeNosPorNivel;
 	}
+	
+	public String toStringPorNivel(){
+		String texto = "";
+		int qtdElementosPorNivel = 1;	
+		int qtdElementosVisualizadosInNivel = 0;		
+		
+		for(int i = 0; i < this.vetor.length; i++) {
+		if(qtdElementosVisualizadosInNivel == qtdElementosPorNivel) {
+			texto+= "\n";			
+			qtdElementosPorNivel*=2;	
+			qtdElementosVisualizadosInNivel = 0;
+		}		
+		texto+= "[ " + this.vetor[i] + " ]";
+		qtdElementosVisualizadosInNivel++;
+			
+		}	
+		
+		return texto;
+	}
+	
 	public int getIndexEsquerda(int idxAtual) {
 		return (2 * idxAtual) + 1; 
 	}
