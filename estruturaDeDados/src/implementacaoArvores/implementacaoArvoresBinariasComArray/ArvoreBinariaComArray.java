@@ -66,8 +66,7 @@ public class ArvoreBinariaComArray <T>{
 	public int getAlturaAtual() {
 		int alturaMax = 0;
 		if(noIsFolha(getIndexEsquerda(0), getIndexDireita(0))){
-			alturaMax = 1;
-			System.out.println("Raiz é nó folha!");
+			return alturaMax = 1;			
 		}
 		else {			
 			int i = 0;
@@ -90,14 +89,52 @@ public class ArvoreBinariaComArray <T>{
 				}						
 				qtdElementosVisualizados++;				
 			}while(qtdElementosVisualizados < this.counter);
-			altura--;					
+			
 		}		
+		altura--;					
 		return altura;
 	}
 	
 	public int getQuantidadeMaxNos() {
+			
+			
+			//int qtdElementosVisualizados = 0;		
+			//do {
+				//System.out.println(qtdElementosProxNivel);
+				//qtdElementosProxNivel*=2;
 		
-		return 0;
+				//qtdElementosVisualizados++;
+			//}while(qtdElementosVisualizados < this.counter);
+			
+			
+		
+			
+			//System.out.println(qtdMaximaElementosPorNivel);
+			
+			int qtdElementosPorNivel = 1;	
+			int qtdElementosVisualizadosInNivel = 0;
+			int somaElementosPorNivel = 0;
+			int maiorQuantidadeNosPorNivel = 0;
+			for(int i = 0; i < this.vetor.length; i++) {
+			if(this.vetor[i] != null) {					
+						
+			}
+			if(qtdElementosVisualizadosInNivel == qtdElementosPorNivel) {
+				qtdElementosPorNivel*=2;	
+				qtdElementosVisualizadosInNivel = 0;
+				if(somaElementosPorNivel > maiorQuantidadeNosPorNivel) {
+					maiorQuantidadeNosPorNivel = somaElementosPorNivel;
+				}
+				somaElementosPorNivel = 0;
+			}
+			qtdElementosVisualizadosInNivel++;
+			if(this.vetor[i] != null) {
+				somaElementosPorNivel++;				
+			}
+				
+			}
+			
+		return maiorQuantidadeNosPorNivel;
 	}
 	public int getIndexEsquerda(int idxAtual) {
 		return (2 * idxAtual) + 1; 
