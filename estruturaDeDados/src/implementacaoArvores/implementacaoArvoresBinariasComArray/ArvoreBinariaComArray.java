@@ -7,8 +7,11 @@ public class ArvoreBinariaComArray <T>{
 	
 	public ArvoreBinariaComArray(int altura) {
 		this.altura = altura;
-		this.vetor = (T[]) new Object[(int) Math.pow(2, (altura + 1) - 1)];
+		this.vetor = (T[]) new Object[(int) Math.pow(2, (altura + 1) - 1) - 1];
 		//Math.pow(2, (altura + 1) - 1)
+	}
+	public ArvoreBinariaComArray() {
+		this(3);
 	}
 	
 	public void insere(T info) {
@@ -123,7 +126,7 @@ public class ArvoreBinariaComArray <T>{
 	}
 	
 	public String toStringPorNivel(){
-		String texto = "";
+		String texto = "\n";
 		int qtdElementosPorNivel = 1;	
 		int qtdElementosVisualizadosInNivel = 0;		
 		
@@ -138,6 +141,38 @@ public class ArvoreBinariaComArray <T>{
 			
 		}	
 		
+		return texto;
+	}
+	
+	public String toStringPreOrdem() {
+		String texto ="\n";
+		int qtdElementosVisualizados = 0;
+		int i = 0;
+		int qtdVezesNo = 0;
+		do {
+			texto += "[ " + this.vetor[i] + " ]";
+			if(getIndexEsquerda(i) < this.vetor.length) {
+				if(this.vetor[getIndexEsquerda(i)] != null) {
+					i = getIndexEsquerda(i);
+				}
+			}else if(getIndexDireita(i) < this.vetor.length) {
+				if(this.vetor[getIndexDireita(i)] != null) {
+					i = getIndexDireita(i);
+				}
+			}else if(noIsFolha(getIndexEsquerda(i), getIndexDireita(i))) {
+				if(qtdVezesNo == 1) {
+					i = getIndexDireita(0);
+				}else {
+					i = getIndexPai(i);
+					i = getIndexDireita(i);
+					
+				}
+				qtdVezesNo++;				
+				
+			}
+	
+			qtdElementosVisualizados++;
+		}while(qtdElementosVisualizados < this.counter);
 		return texto;
 	}
 	
