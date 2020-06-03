@@ -4,7 +4,8 @@ public class ArvoreBinariaComArray <T>{
 	private int altura = -1;
 	private T[] vetor;
 	private int counter;
-	
+	private static String inOrder = "";
+	private static String posOrder = "";
 	public ArvoreBinariaComArray(int altura) {
 		this.altura = altura;
 		this.vetor = (T[]) new Object[(int) Math.pow(2, (altura + 1) - 1) - 1];
@@ -145,7 +146,7 @@ public class ArvoreBinariaComArray <T>{
 	}
 	
 	public String toStringPreOrdem() {
-		String texto ="\n";
+		String texto ="";
 		int qtdElementosVisualizados = 0;
 		int i = 0;
 		int qtdVezesNo = 0;
@@ -174,6 +175,39 @@ public class ArvoreBinariaComArray <T>{
 			qtdElementosVisualizados++;
 		}while(qtdElementosVisualizados < this.counter);
 		return texto;
+	}
+	public String toStringEmOrdem() {
+		if(ArvoreBinariaComArray.inOrder != null) {
+			ArvoreBinariaComArray.inOrder = "";
+		}
+		inOrdem(0);
+		/* String static pq o metodo tem que retornar String, tentei de varias formas fazer com que este metodo recursivo
+		 *  retorne o conteudo da linha onde seta a informacao da String inOrder,
+		 *   entretando se colocar return nesta linha o metodo abaixo nao tem como executar 
+		*/
+		return ArvoreBinariaComArray.inOrder;		
+	}
+	
+	public String toStringPosOrdem() {
+		if(ArvoreBinariaComArray.posOrder != null) {
+			ArvoreBinariaComArray.posOrder = new String();
+		}
+		posOrdem(0);
+		return ArvoreBinariaComArray.posOrder;
+	}
+	private void inOrdem(int idxElemento) {		
+		if(idxElemento < this.counter) {
+			inOrdem(getIndexEsquerda(idxElemento));			
+			ArvoreBinariaComArray.inOrder += "[ " + this.vetor[idxElemento] + " ]";
+			inOrdem(getIndexDireita(idxElemento));			
+		}	
+	}
+	public void posOrdem(int idxElemento) {
+		if(idxElemento < this.counter) {
+			posOrdem(getIndexEsquerda(idxElemento));
+			posOrdem(getIndexDireita(idxElemento));
+			ArvoreBinariaComArray.posOrder += "[ " + this.vetor[idxElemento] + " ]";
+		}
 	}
 	
 	public int getIndexEsquerda(int idxAtual) {
