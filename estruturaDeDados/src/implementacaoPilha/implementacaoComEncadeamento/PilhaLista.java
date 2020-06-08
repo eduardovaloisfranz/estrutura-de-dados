@@ -61,5 +61,8 @@ public class PilhaLista<T> implements Pilha<T> {
 			tmp = tmp.getLast();
 		}
 	}
+	public int size() {
+		return this.counter;
+	}
 
 }
