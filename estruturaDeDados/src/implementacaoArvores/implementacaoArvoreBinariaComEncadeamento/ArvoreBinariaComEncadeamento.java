@@ -4,7 +4,7 @@ import implementacaoPilha.implementacaoComEncadeamento.*;
 
 public class ArvoreBinariaComEncadeamento<T> {
 	private NoArvore<?> raiz;
-	private int counter;
+	private int counter;	
 	private static String toStringPorNivel;
 	
 	public ArvoreBinariaComEncadeamento() {
@@ -60,16 +60,12 @@ public class ArvoreBinariaComEncadeamento<T> {
 	    }	
 		
 	private String toStringPorNivel() {
-		String texto = "";
-		int altura = this.altura();
-
-		if(ArvoreBinariaComEncadeamento.toStringPorNivel != null) {
-			ArvoreBinariaComEncadeamento.toStringPorNivel = "";			
-		}
+		int altura = this.altura();		
+		ArvoreBinariaComEncadeamento.toStringPorNivel = "";			
 		for(int i = 0; i <= altura; i++) {
 			toStringPorNivel(raiz, i);			
-		}		
-		//System.out.println(ArvoreBinariaComEncadeamento.toStringPorNivel);
+		}	
+		
 		return ArvoreBinariaComEncadeamento.toStringPorNivel;
 	}
 	
@@ -78,18 +74,16 @@ public class ArvoreBinariaComEncadeamento<T> {
 		if (raiz == null) {
 			return;
 		}
-	     if (nivel == 1) {        	
-	    	 
+	     if (nivel == 1) {	    	
 	    	 texto += raiz.getInfo();	    	
-	    	 
 	     }	        
-	     else if (nivel > 1)  {
+	     else if (nivel > 1)  {	    	 
 	        toStringPorNivel(raiz.getFilhoEsquerda(), nivel-1);	        
 	        toStringPorNivel(raiz.getFilhoDireita(), nivel-1); 
-	     }   	 
-	    texto +=">";  
+	     }
 	    
-	    toStringPorNivel += texto;	    
+	    texto +=">";
+	    toStringPorNivel += texto;  
 	    
 	}
 	private String toStringPreOrdem() {
@@ -132,19 +126,12 @@ public class ArvoreBinariaComEncadeamento<T> {
 	
 	private String toStringPosOrdem() {
 		String posOrdem = "";
-		PilhaLista<NoArvore<?>> pilha = new PilhaLista<>(); 
-        
-        // Check for empty tree 
-        //if (raiz == null) 
-             
+		PilhaLista<NoArvore<?>> pilha = new PilhaLista<>();      
         pilha.push(raiz); 
         NoArvore<?> anterior = null; 
         while (!pilha.isEmpty())  
         { 
-            NoArvore<?> atual = pilha.top(); 
-   
-            /* go down the tree in search of a leaf an if so process it  
-            and pop stack otherwise move down */
+            NoArvore<?> atual = pilha.top();    
             if (anterior == null || anterior.getFilhoEsquerda() == atual||  
                                         anterior.getFilhoDireita() == atual)  
             { 
@@ -155,14 +142,9 @@ public class ArvoreBinariaComEncadeamento<T> {
                 	pilha.push(atual.getFilhoDireita());                	
                 }
                 else{ 
-                    pilha.pop(); 
-                    //list.add(current.data);
+                    pilha.pop();                     
                     posOrdem +="<" + atual.getInfo() + ">";
-                } 
-   
-                /* go up the tree from left node, if the child is right  
-                   push it onto stack otherwise process parent and pop  
-                   stack */
+                }    
             }  
             else if (atual.getFilhoEsquerda() == anterior)  
             { 
@@ -171,19 +153,14 @@ public class ArvoreBinariaComEncadeamento<T> {
                 }
                 else { 
                     pilha.pop(); 
-                    //list.add(current.data);
                     posOrdem +="<" + atual.getInfo() + ">";
-                } 
-                   
-                /* go up the tree from right node and after coming back 
-                 from right node process parent and pop stack */
+                }                   
             }  
             else if (atual.getFilhoDireita() == anterior)  
             { 
                 pilha.pop(); 
                 posOrdem +="<" + atual.getInfo() + ">"; 
-            } 
-   
+            }    
             anterior = atual; 
         } 
 		
