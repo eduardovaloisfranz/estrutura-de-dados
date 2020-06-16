@@ -25,6 +25,10 @@ public class FilaListaEncadeada <T> implements Fila<T>{
 		}
 		this.counter++;
 	}
+	
+	public T peek() {
+		return (T) first.getInfo();
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

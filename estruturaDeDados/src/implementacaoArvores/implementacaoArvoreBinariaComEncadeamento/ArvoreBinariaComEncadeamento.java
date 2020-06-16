@@ -1,6 +1,7 @@
 package implementacaoArvores.implementacaoArvoreBinariaComEncadeamento;
 
 import implementacaoPilha.implementacaoComEncadeamento.*;
+import implementacaoFilaEncadeada.*;
 
 public class ArvoreBinariaComEncadeamento<T> {
 	private NoArvore<?> raiz;
@@ -15,14 +16,52 @@ public class ArvoreBinariaComEncadeamento<T> {
 		NoArvore<T> no = new NoArvore<T>(info, filhoEsquerda, filhoDireita);
 		raiz = no;
 		counter++;
-		return no;
+		return no;	
 	}
+	
+	public T insere(T info){
+		caminharNiveis(info);
+		return info;
+	}
+	private void caminharNiveis(T info) {
+		int altura = altura();
+		for(int i = 0; i <= altura; i++) {
+			try {
+				caminharNiveis(raiz, i, info);				
+			}catch(Exception ex) {
+				break;
+			}
+		}
+	}
+	private void caminharNiveis(NoArvore _raiz, int nivel, T info) throws Exception{
+		if (_raiz == null) {
+			return;
+		}		
+	     if (nivel == 1) {
+	    	 if(_raiz.getFilhoEsquerda() == null) {	    		 
+	    		 _raiz.setFilhoEsquerda(info); 		     		 
+	    		 throw new Exception();	    		 
+	    	 }
+	    	 else if(_raiz.getFilhoDireita() == null) {
+	    		 _raiz.setFilhoDireita(info);
+	    		 throw new Exception();	    		 
+	    	 }	    	 
+	    	
+	     }	        
+	     else if (nivel > 1)  {
+	    	 caminharNiveis(raiz.getFilhoEsquerda(), nivel-1, info);	        
+	    	 caminharNiveis(raiz.getFilhoDireita(), nivel-1, info); 
+	     }		
+		
+	}
+	
 	
 	public boolean vazia() {
 		return raiz == null ? true : false;
 	}
 	
-	public boolean pertence(T info) {
+	private boolean pertenceex(T info) {
+		//igual exemplo, mas nessa arvore se testar o El 4 da nullpointer exception
 		return pertence(this.raiz, info);
 	}
 	
@@ -106,6 +145,26 @@ public class ArvoreBinariaComEncadeamento<T> {
 		return inPreOrdem;	
 	}	
 	
+	public boolean pertence(T info) {
+		  PilhaLista<NoArvore<?>> pilha = new PilhaLista<>(); 
+	        NoArvore<?> atual = raiz; 
+	  
+	        while (atual != null || pilha.size() > 0) {   
+	            while (atual!=  null){ 
+	                pilha.push(atual); 
+	                atual = atual.getFilhoEsquerda(); 
+	            }         
+	            
+	            atual = pilha.pop();	            
+	            if(info.equals(atual.getInfo())) {
+	            	return true;
+	            }
+	            atual = atual.getFilhoDireita(); 
+	        }
+	    return false;
+	       
+	}
+	
 	private String toStringEmOrdem() {
 		String inOrdem = "";
         PilhaLista<NoArvore<?>> pilha = new PilhaLista<>(); 
@@ -170,6 +229,12 @@ public class ArvoreBinariaComEncadeamento<T> {
 	@Override
 	public String toString() {
 		return "\nArvore Por nível: " + toStringPorNivel() + "\nPré Ordem: " + toStringPreOrdem() + "\nEm Ordem " + toStringEmOrdem() + "\nPos Ordem: " + toStringPosOrdem();
+	}
+
+	public void liberaRecursos() {
+		this.counter = 0;
+		this.raiz = null;
+		
 	}	
 	
 }

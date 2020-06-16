@@ -5,7 +5,7 @@ public class NoArvore<T> {
 	private NoArvore<?> filhoEsquerda;
 	private NoArvore<?> filhoDireita;
 	
-	public NoArvore(T info) {
+	public NoArvore(T info) {		
 		this.info = info;
 		this.filhoEsquerda = null;
 		this.filhoDireita = null;
@@ -21,6 +21,19 @@ public class NoArvore<T> {
 		return this.filhoEsquerda;
 	}
 	
+	public void setFilhoEsquerda(T info) {
+		NoArvore<T> no = new NoArvore<T>(info);
+		this.filhoEsquerda = no;
+	}
+	
+	public void setFilhoDireita(T info) {
+		this.filhoDireita = new NoArvore<T>(info);
+	}
+	public void setInfo(T info) {
+		this.info = info;
+	}
+	
+	
 	public NoArvore<?> getFilhoDireita(){
 		return this.filhoDireita;
 	}
@@ -28,6 +41,7 @@ public class NoArvore<T> {
 	public T getInfo() {
 		return this.info;
 	}
+	
 
 
 }
