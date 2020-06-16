@@ -64,7 +64,7 @@ public class ArvoreBinariaComArray <T>{
 		return false;
 	}	
 	public void liberaRecursos() {		
-		this.vetor = (T[]) new Object[2^(altura + 1) - 1];		
+		this.vetor = (T[]) new Object[(int) Math.pow(2, (altura + 1) - 1) - 1];		
 	}
 	
 	public int getAlturaAtual() {
@@ -145,7 +145,7 @@ public class ArvoreBinariaComArray <T>{
 		return texto;
 	}
 	
-	public String toStringPreOrdem() {
+	private String toStringPreOrdem() {
 		String texto ="";
 		int qtdElementosVisualizados = 0;
 		int i = 0;
@@ -176,19 +176,15 @@ public class ArvoreBinariaComArray <T>{
 		}while(qtdElementosVisualizados < this.counter);
 		return texto;
 	}
-	public String toStringEmOrdem() {
+	private String toStringEmOrdem() {
 		if(ArvoreBinariaComArray.inOrder != null) {
 			ArvoreBinariaComArray.inOrder = "";
 		}
 		inOrdem(0);
-		/* String static pq o metodo tem que retornar String, tentei de varias formas fazer com que este metodo recursivo
-		 *  retorne o conteudo da linha onde seta a informacao da String inOrder,
-		 *   entretando se colocar return nesta linha o metodo abaixo nao tem como executar 
-		*/
 		return ArvoreBinariaComArray.inOrder;		
 	}
 	
-	public String toStringPosOrdem() {
+	private String toStringPosOrdem() {
 		if(ArvoreBinariaComArray.posOrder != null) {
 			ArvoreBinariaComArray.posOrder = new String();
 		}
@@ -202,7 +198,7 @@ public class ArvoreBinariaComArray <T>{
 			inOrdem(getIndexDireita(idxElemento));			
 		}	
 	}
-	public void posOrdem(int idxElemento) {
+	private void posOrdem(int idxElemento) {
 		if(idxElemento < this.counter) {
 			posOrdem(getIndexEsquerda(idxElemento));
 			posOrdem(getIndexDireita(idxElemento));
@@ -210,23 +206,18 @@ public class ArvoreBinariaComArray <T>{
 		}
 	}
 	
-	public int getIndexEsquerda(int idxAtual) {
+	private int getIndexEsquerda(int idxAtual) {
 		return (2 * idxAtual) + 1; 
 	}
 	
-	public int getIndexDireita(int idxAtual) {
+	private int getIndexDireita(int idxAtual) {
 		return 2 * idxAtual + 2;
 	}
 	
-	public int getIndexPai(int idxFilho) {
+	private int getIndexPai(int idxFilho) {
 		return (int) (idxFilho  - 1) / 2;
 	}
-	
-	public void show() {
-		for(T info : this.vetor) {	
-			System.out.print(info + " ");
-		}
-	}
+
 	public boolean noIsFolha (int idxFilhoEsquerda, int idxFilhoDireita) {	
 		if(idxFilhoEsquerda >= this.vetor.length || idxFilhoDireita >= this.vetor.length) {		
 			return true;
@@ -238,6 +229,12 @@ public class ArvoreBinariaComArray <T>{
 			}
 		}
 	
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "ToString por Nivel: " + toStringPorNivel() + "\ntoString Pré Ordem: " + toStringPreOrdem() + "\ntoString Pos Ordem: " + toStringPosOrdem() + "\ntoString Em Ordem:  " + toStringEmOrdem();
+		
 	}
 
 }
