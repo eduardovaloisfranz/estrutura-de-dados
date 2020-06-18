@@ -1,7 +1,5 @@
 package implementacaoArvores.implementacaoArvoreBinariaComEncadeamento;
-
-import implementacaoPilha.implementacaoComEncadeamento.*;
-import implementacaoFilaEncadeada.*;
+import implementacaoArvores.implementacaoComEncadeamento.*;
 
 public class ArvoreBinariaComEncadeamento<T> {
 	private NoArvore<?> raiz;
@@ -79,10 +77,10 @@ public class ArvoreBinariaComEncadeamento<T> {
 	
 	private int altura(NoArvore raiz) 
 	    { 
-	        if (raiz == null) 
-	           return 0; 
-	        else
-	        { 	            
+	        if (raiz == null) {
+	        	return 0;	        	
+	        }
+	        else{ 	            
 	            int alturaDireita = altura(raiz.getFilhoEsquerda()); 
 	            int alturaEsquerda = altura(raiz.getFilhoDireita());
 	              
@@ -90,10 +88,8 @@ public class ArvoreBinariaComEncadeamento<T> {
 	            if (alturaEsquerda> alturaDireita) {
 	            	return(alturaEsquerda+1);
 	            	
-	            }else
-	            {
-	            return(alturaDireita+1); 
-	            	
+	            }else{
+	            	return(alturaDireita+1);	            	
 	            }
 	        } 
 	    }	

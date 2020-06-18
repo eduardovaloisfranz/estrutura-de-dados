@@ -16,10 +16,8 @@ public class ArvoreBinariaComEncadeamentoMain {
 		System.out.println("El 4 pertence na arvore?" + arvore.pertence(4));
 		System.out.println("Altura atual da Arvore: " + arvore.altura());
 		
-		//System.out.println(arvore.altura());
-		
 		arvore.liberaRecursos();
-		System.out.println("Arvore está vazia: " + arvore.vazia());
+		System.out.println("Arvore está vazia: " + arvore.vazia());	
 		
 
 	}
