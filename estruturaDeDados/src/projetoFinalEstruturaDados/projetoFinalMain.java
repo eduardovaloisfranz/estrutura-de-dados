@@ -1,7 +1,6 @@
 package projetoFinalEstruturaDados;
 
 import java.util.Scanner;
-
 import projetoFinalEstruturaDados.implementacaoArvoreBinariaBusca.ArvoreBinariaComEncadeamento;
 
 public class projetoFinalMain {
@@ -10,21 +9,20 @@ public class projetoFinalMain {
 	public static ArvoreBinariaComEncadeamento<Integer> arvore = new ArvoreBinariaComEncadeamento<>();
 	public static void main(String[] args) {
 		//Menu();
+		arvore.insereEmOrdem(99);
+		arvore.insereEmOrdem(3);
+		arvore.insereEmOrdem(4);
+		arvore.insereEmOrdem(23);
+		arvore.insereEmOrdem(4);
 		
-		arvore.insereEmOrdem(50);
-		arvore.insereEmOrdem(30);
-		arvore.insereEmOrdem(20);
-		arvore.insereEmOrdem(40);
-		arvore.insereEmOrdem(70);
-		arvore.insereEmOrdem(80);
-		
-		arvore.removerElemento(110);
-		
-		//System.out.println(arvore.counter);
-		System.out.println(arvore.toString());
-		//for(int i = 0; i < arvore.toStringPorNivelVetor().length; i++) {
-			//System.out.print("[ " + arvore.toStringEmOrdemVetor()[i] + " ]");
-		//}
+		//exibirArray(arvore.toStringPreOrdemVetor());
+		exibirArray(bubbleSort(arvore.toStringPreOrdemVetor()));
+		System.out.println("\n");
+		QuickSort qs = new QuickSort(arvore.toStringEmOrdemVetor());
+		exibirArray(qs.ordenar());
+		System.out.println("\n");
+		MergeSort ms = new MergeSort(arvore.toStringPorNivelVetor());
+		exibirArray(ms.ordenar());
 	
 	}
 	public static void Menu() {
@@ -72,11 +70,48 @@ public class projetoFinalMain {
 		Menu();
 	}
 	public static void RemoverElemento() {
+		if(arvore.vazia() == false) {
+			System.out.print("Digite o elemento que deseja remover: ");
+			Integer elementoARemover = input.nextInt();			
+		}else {
+			System.out.println("Arvore encontra-se vazia, não possibilitando remover elementos, adicione mais para usar esta função");
+		}
+		Menu();
 		
 	}
 	public static void VisualizarArvoreBinaria() {
-		System.out.println(arvore.toString());
+		if(arvore.vazia()) {
+			System.out.println("Arvore encontra-se vazia, não possibilitando visualizar-la, tente adicionar elementos para usar esta função");
+		}else {
+			System.out.println(arvore.toString());			
+		}
 		Menu();
+	}
+	
+	public Integer[] inverterArray(Integer[] vet) {
+		Integer[] newVet = new Integer[vet.length];
+		for(int i = vet.length; i > 0; i--) {
+			newVet[i] = vet[i];
+		}
+		return newVet;
+	}
+	
+	public static Integer[] bubbleSort(Integer[] vet) {
+		 int n = vet.length; 
+	        for (int i = 0; i < n-1; i++) 
+	            for (int j = 0; j < n-i-1; j++) 
+	                if (vet[j] > vet[j+1]){	                     
+	                    Integer temp = vet[j]; 
+	                    vet[j] = vet[j+1]; 
+	                    vet[j+1] = temp; 
+	                } 
+	       return vet;
+	}
+	
+	public static void exibirArray(Integer[] vetor) {
+		for(int i = 0; i < vetor.length; i++) {
+			System.out.print("[ " + vetor[i] + " ]");
+		}
 	}
 
 }

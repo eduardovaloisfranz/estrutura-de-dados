@@ -10,14 +10,8 @@ public class ArvoreBinariaComEncadeamento<T> {
 	
 	public ArvoreBinariaComEncadeamento() {
 		this.raiz = null;
-	}
-	
-	public NoArvore<T> insere(T info, NoArvore<T> filhoEsquerda, NoArvore<T> filhoDireita) {
-		NoArvore<T> no = new NoArvore<T>(info, filhoEsquerda, filhoDireita);
-		raiz = no;
-		counter++;
-		return no;	
-	}
+	}	
+
 	public void insereEmOrdem(T info) {
 		if(counter > 1) {
 			inserirEmOrdem(this.raiz, info);
@@ -57,43 +51,7 @@ public class ArvoreBinariaComEncadeamento<T> {
 	    }
 	    return y;  
 	}
-	public T insere(T info){
-		caminharNiveis(info);
-		return info;
-	}
-	private void caminharNiveis(T info) {
-		int altura = altura();
-		for(int i = 0; i <= altura; i++) {
-			try {
-				caminharNiveis(raiz, i, info);				
-			}catch(Exception ex) {
-				break;
-			}
-		}
-	}
-	private void caminharNiveis(NoArvore _raiz, int nivel, T info) throws Exception{
-		if (_raiz == null) {
-			return;
-		}		
-	     if (nivel == 1) {
-	    	 if(_raiz.getFilhoEsquerda() == null) {	    		 
-	    		 _raiz.setFilhoEsquerda(info); 		     		 
-	    		 throw new Exception();	    		 
-	    	 }
-	    	 else if(_raiz.getFilhoDireita() == null) {
-	    		 _raiz.setFilhoDireita(info);
-	    		 throw new Exception();	    		 
-	    	 }	    	 
-	    	
-	     }	        
-	     else if (nivel > 1)  {
-	    	 caminharNiveis(raiz.getFilhoEsquerda(), nivel-1, info);	        
-	    	 caminharNiveis(raiz.getFilhoDireita(), nivel-1, info); 
-	     }		
 		
-	}
-	
-	
 	public boolean vazia() {
 		return raiz == null ? true : false;
 	}
@@ -137,7 +95,7 @@ public class ArvoreBinariaComEncadeamento<T> {
 	private String toStringPorNivel() {
 		int altura = this.altura();		
 		ArvoreBinariaComEncadeamento.toStringPorNivel = "";		
-		ArvoreBinariaComEncadeamento.toStringPorNivelArray = new Integer[this.counter + 1];		
+		ArvoreBinariaComEncadeamento.toStringPorNivelArray = new Integer[this.counter];		
 		ArvoreBinariaComEncadeamento.idx = 0;
 		for(int i = 0; i <= altura; i++) {
 			toStringPorNivel(raiz, i);			
@@ -279,17 +237,17 @@ public class ArvoreBinariaComEncadeamento<T> {
 	}
 	
 	public Integer[] toStringPreOrdemVetor() {
-		Integer[] vet = new Integer[this.counter + 1];
+		Integer[] vet = new Integer[this.counter];
 		PilhaLista<NoArvore<?>> nodes = new PilhaLista<>();
-		int idx = 0;
+		int idxAUX = 0;
 		nodes.push(raiz);
 		
 		while (!nodes.isEmpty()) {
 		 NoArvore<?> atual= nodes.pop();
 		      //inPreOrdem += "<" + atual.getInfo() + ">";	      
 		 if(atual.getInfo() instanceof Number) {
-			 vet[idx] = (Integer) atual.getInfo();
-			 
+			 vet[idxAUX] = (Integer) atual.getInfo();
+			 idxAUX++;
 		 }
 		      if (atual.getFilhoDireita()!= null) {
 		        nodes.push(atual.getFilhoDireita());
@@ -303,7 +261,7 @@ public class ArvoreBinariaComEncadeamento<T> {
 	}
 	
 	public Integer[] toStringEmOrdemVetor() {
-		Integer[] vet = new Integer[this.counter + 1];
+		Integer[] vet = new Integer[this.counter];
         PilhaLista<NoArvore<?>> pilha = new PilhaLista<>(); 
         NoArvore<?> atual = raiz; 
         int idx = 0;
