@@ -236,6 +236,54 @@ public class ArvoreBinariaComEncadeamento<T> {
 		return toStringPorNivelArray;
 	}
 	
+	public Integer[] toStringPosOrdemVetor() {
+		Integer[] vet = new Integer[this.counter];
+		PilhaLista<NoArvore<?>> pilha = new PilhaLista<>();      
+        pilha.push(raiz); 
+        NoArvore<?> anterior = null; 
+        int index = 0;
+        while (!pilha.isEmpty())  
+        { 
+            NoArvore<?> atual = pilha.top();    
+            if (anterior == null || anterior.getFilhoEsquerda() == atual||  
+                                        anterior.getFilhoDireita() == atual)  
+            { 
+                if (atual.getFilhoEsquerda()!= null) {
+                	pilha.push(atual.getFilhoEsquerda());                	
+                }
+                else if (atual.getFilhoDireita()!= null) {
+                	pilha.push(atual.getFilhoDireita());                	
+                }
+                else{ 
+                    pilha.pop();                     
+                    vet[index] = (Integer) atual.getInfo();
+                    index++;
+                }    
+            }  
+            else if (atual.getFilhoEsquerda() == anterior)  
+            { 
+                if (atual.getFilhoDireita()!= null) {
+                	pilha.push(atual.getFilhoDireita());                	
+                }
+                else { 
+                    pilha.pop(); 
+                    vet[index] = (Integer) atual.getInfo();
+                    index++;
+                }                   
+            }  
+            else if (atual.getFilhoDireita() == anterior)  
+            { 
+                pilha.pop(); 
+                //posOrdem +="<" + atual.getInfo() + ">";
+                vet[index] = (Integer) atual.getInfo();
+                index++;
+            }    
+            anterior = atual; 
+        } 
+		
+		return vet;	
+	}
+	
 	public Integer[] toStringPreOrdemVetor() {
 		Integer[] vet = new Integer[this.counter];
 		PilhaLista<NoArvore<?>> nodes = new PilhaLista<>();
