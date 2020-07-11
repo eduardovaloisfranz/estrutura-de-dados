@@ -50,6 +50,45 @@ public class NoArvore<T> {
 		return this.info;
 	}
 	
+	public boolean remove(Integer value, NoArvore no) {
+        if (value < (Integer) this.info) {
+              if (filhoEsquerda != null) {
+            	  return filhoEsquerda.remove(value, this);            	  
+              }else {
+            	  return false;           	  
+              }
+        }else if (value > (Integer) this.info) {
+              if (filhoDireita != null) {
+            	  return filhoDireita.remove(value, this);           	  
+              }else {
+            	  return false;           	  
+              }
+      } else {
+              if (filhoEsquerda != null && filhoDireita!= null) {
+                    this.info = (T) filhoDireita.minValue();
+                    filhoDireita.remove((Integer) this.info, this);
+
+              } else if (no.filhoEsquerda == this) {
+                    no.filhoEsquerda= (filhoEsquerda!= null) ? filhoEsquerda: filhoDireita;
+              } else if (no.filhoDireita == this) {
+                    no.filhoDireita= (filhoEsquerda!= null) ? filhoEsquerda: filhoDireita;
+              }
+
+              return true;
+
+        }
+
+  }
+  public Integer minValue() {
+        if (filhoEsquerda == null) {
+        	return (Integer) info;        	
+        }
+        else {
+        	return filhoEsquerda.minValue();        	
+        }
+
+  }
+	
 
 
 }

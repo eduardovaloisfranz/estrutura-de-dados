@@ -8,7 +8,7 @@ public class projetoFinalMain {
 	public static Scanner input = new Scanner(System.in);
 	public static ArvoreBinariaComEncadeamento<Integer> arvore = new ArvoreBinariaComEncadeamento<>();
 	public static void main(String[] args) {
-		Menu();
+		Menu();	
 	}
 	public static void Menu() {
 		short opcaoDesejada = 0;
@@ -57,7 +57,8 @@ public class projetoFinalMain {
 	public static void RemoverElemento() {
 		if(arvore.vazia() == false) {
 			System.out.print("Digite o elemento que deseja remover: ");
-			Integer elementoARemover = input.nextInt();			
+			Integer elementoARemover = input.nextInt();		
+			arvore.removerElemento(elementoARemover);
 		}else {
 			System.out.println("Arvore encontra-se vazia, não possibilitando remover elementos, adicione mais para usar esta função");
 		}
@@ -69,16 +70,18 @@ public class projetoFinalMain {
 			System.out.println("Arvore encontra-se vazia, não possibilitando visualizar-la, tente adicionar elementos para usar esta função");
 		}else {
 			
-			exibirArray(arvore.toStringPorNivelVetor());
+			exibirArvore(arvore.toStringPorNivelVetor());
 			
 			System.out.println(arvore.toString());			
 			System.out.println("Agora os tempos de ordenação: ");
-			//pre,pos,in, nivel
+			
+			System.out.println("Pré Ordem Vetor: ");
+			exibirArray(arvore.toStringPreOrdemVetor());
 			long tempoInicial = System.nanoTime();
 			bubbleSort(arvore.toStringPreOrdemVetor());
 			long tempoFinal = System.nanoTime();
 			long duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Pré Ordem no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Pré Ordem no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs = new QuickSort(arvore.toStringPreOrdemVetor());
 			tempoInicial = System.nanoTime();
 			qs.ordenar();
@@ -92,12 +95,13 @@ public class projetoFinalMain {
 			duracao = tempoFinal - tempoInicial;
 			System.out.println("O tempo de Ordenação da Arvore Pré ordem no Método MergeSort demorou: " + duracao + " ns\n");
 			
-			
+			System.out.println("Pós Ordem Vetor: ");
+			exibirArray(arvore.toStringPosOrdemVetor());						
 			tempoInicial = System.nanoTime();
 			bubbleSort(arvore.toStringPosOrdemVetor());
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Pós Ordem no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Pós Ordem no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs2 = new QuickSort(arvore.toStringPosOrdemVetor());
 			tempoInicial = System.nanoTime();
 			qs2.ordenar();
@@ -111,11 +115,13 @@ public class projetoFinalMain {
 			duracao = tempoFinal - tempoInicial;
 			System.out.println("O tempo de Ordenação da Arvore Pós ordem no Método MergeSort demorou: " + duracao + " ns\n");	
 			
+			System.out.println("Em Ordem Vetor: ");
+			exibirArray(arvore.toStringEmOrdemVetor());
 			tempoInicial = System.nanoTime();
 			bubbleSort(arvore.toStringEmOrdemVetor());
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Em Ordem no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Em Ordem no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs3 = new QuickSort(arvore.toStringEmOrdemVetor());
 			tempoInicial = System.nanoTime();
 			qs3.ordenar();
@@ -129,11 +135,13 @@ public class projetoFinalMain {
 			duracao = tempoFinal - tempoInicial;
 			System.out.println("O tempo de Ordenação da Arvore Em ordem no Método MergeSort demorou: " + duracao + " ns\n");
 			
+			System.out.println("Por Nivel Vetor: ");
+			exibirArray(arvore.toStringPorNivelVetor());			
 			tempoInicial = System.nanoTime();
 			bubbleSort(arvore.toStringPorNivelVetor());
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Por Nivel no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Por Nivel no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs4 = new QuickSort(arvore.toStringPorNivelVetor());
 			tempoInicial = System.nanoTime();
 			qs4.ordenar();
@@ -147,11 +155,14 @@ public class projetoFinalMain {
 			duracao = tempoFinal - tempoInicial;
 			System.out.println("O tempo de Ordenação da Arvore Por Nivel no Método MergeSort demorou: " + duracao + " ns\n");	
 			
+			System.out.println("Por Nivel Invertido Vetor: ");
+			exibirArray(inverterArray(arvore.toStringPorNivelVetor()));
+			
 			tempoInicial = System.nanoTime();
 			bubbleSort(inverterArray(arvore.toStringPorNivelVetor()));
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Por Nivel Invertido no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Por Nivel Invertido no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs5 = new QuickSort(inverterArray(arvore.toStringPorNivelVetor()));
 			tempoInicial = System.nanoTime();
 			qs5.ordenar();
@@ -165,11 +176,13 @@ public class projetoFinalMain {
 			duracao = tempoFinal - tempoInicial;
 			System.out.println("O tempo de Ordenação da Arvore Por Nivel invertido no Método MergeSort demorou: " + duracao + " ns\n");	
 			
+			System.out.println("Pos Ordem Invertido Vetor: ");
+			exibirArray(inverterArray(arvore.toStringPosOrdemVetor()));			
 			tempoInicial = System.nanoTime();
 			bubbleSort(inverterArray(arvore.toStringPosOrdemVetor()));
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Pos Ordem Invertida no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Pos Ordem Invertida no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs6 = new QuickSort(inverterArray(arvore.toStringPosOrdemVetor()));
 			tempoInicial = System.nanoTime();
 			qs6.ordenar();
@@ -183,11 +196,13 @@ public class projetoFinalMain {
 			duracao = tempoFinal - tempoInicial;
 			System.out.println("O tempo de Ordenação da Arvore Pos Ordem invertida no Método MergeSort demorou: " + duracao + " ns\n");
 			
+			System.out.println("Em Ordem Invertido Vetor: ");
+			exibirArray(inverterArray(arvore.toStringEmOrdemVetor()));			
 			tempoInicial = System.nanoTime();
 			bubbleSort(inverterArray(arvore.toStringEmOrdemVetor()));
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Em Ordem Invertida no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Em Ordem Invertida no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs7 = new QuickSort(inverterArray(arvore.toStringEmOrdemVetor()));
 			tempoInicial = System.nanoTime();
 			qs7.ordenar();
@@ -199,13 +214,15 @@ public class projetoFinalMain {
 			ms7.ordenar();
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Em Ordem invertida no Método MergeSort demorou: " + duracao + " ns\n");
+			System.out.println("O tempo de Ordenação da Arvore Em Ordem invertida no Método MergeSort demorou: " + duracao + " ns\n");			
 			
+			System.out.println("Pre Ordem Invertido Vetor: ");
+			exibirArray(inverterArray(arvore.toStringPreOrdemVetor()));
 			tempoInicial = System.nanoTime();
 			bubbleSort(inverterArray(arvore.toStringPreOrdemVetor()));
 			tempoFinal = System.nanoTime();
 			duracao = tempoFinal - tempoInicial;
-			System.out.println("O tempo de Ordenação da Arvore Pre Ordem Invertida no Método BubbleSort demorou: " + duracao + " ns");
+			System.out.println("\nO tempo de Ordenação da Arvore Pre Ordem Invertida no Método BubbleSort demorou: " + duracao + " ns");
 			QuickSort qs8 = new QuickSort(inverterArray(arvore.toStringPreOrdemVetor()));
 			tempoInicial = System.nanoTime();
 			qs8.ordenar();
@@ -240,11 +257,13 @@ public class projetoFinalMain {
 		 int n = vet.length; 
 	        for (int i = 0; i < n-1; i++) 
 	            for (int j = 0; j < n-i-1; j++) 
-	                if (vet[j] > vet[j+1]){	                     
-	                    Integer temp = vet[j]; 
-	                    vet[j] = vet[j+1]; 
-	                    vet[j+1] = temp; 
-	                } 
+	                if(vet[j] != null && vet[j + 1] != null) {	                		                
+	                	if (vet[j] > vet[j+1]){	                     
+	                		Integer temp = vet[j]; 
+	                		vet[j] = vet[j+1]; 
+	                		vet[j+1] = temp; 
+	                	}
+	               } 
 	       return vet;
 	}
 	
@@ -258,11 +277,11 @@ public class projetoFinalMain {
 		int qtdElementosVisualizadosInNivel = 0;		
 		for(int i = 0; i < arvore.length; i++) {
 		if(qtdElementosVisualizadosInNivel == qtdElementosPorNivel) {
-			System.out.println("\n");
+			System.out.print("\n");
 			qtdElementosPorNivel*=2;	
 			qtdElementosVisualizadosInNivel = 0;
 		}		
-		System.out.println("[ " + arvore[i] + " ]");
+		System.out.print("[ " + arvore[i] + " ]");
 		qtdElementosVisualizadosInNivel++;			
 		}	
 		

@@ -21,6 +21,32 @@ public class ArvoreBinariaComEncadeamento<T> {
 		}
 		this.counter++;
 	}
+	public void removerElemento(Integer info) {
+		if(removerElementoAux(info)) {
+			this.counter--;
+		}else {
+			System.out.println("Elemento Não Encontrado");
+		}
+	}
+	
+	 private boolean removerElementoAux(Integer value) {
+         if (raiz == null) {        	 
+        	 return false;     
+         }
+         else {
+        	 if (raiz.getInfo() == value) {
+                     NoArvore auxRoot = new NoArvore(0, null, null);
+                     auxRoot.setFilhoEsquerdaNo(raiz);
+                     boolean result = raiz.remove(value, auxRoot);
+                     raiz = auxRoot.getFilhoEsquerda();
+                     return result;
+               } else {
+                     return raiz.remove(value, null);                     
+               }
+         }
+         
+
+   }
 	private NoArvore inserirEmOrdem(NoArvore raiz, T info) {
      
 	    NoArvore no = new NoArvore(info, null, null); 	   
@@ -55,26 +81,12 @@ public class ArvoreBinariaComEncadeamento<T> {
 	public boolean vazia() {
 		return raiz == null ? true : false;
 	}
-	
-	private boolean pertenceex(T info) {
-		//igual exemplo, mas nessa arvore se testar o El 4 da nullpointer exception
-		return pertence(this.raiz, info);
-	}
-	
-	private boolean pertence(NoArvore<?> no, T info) {
-		if(raiz == null) {
-			return false;
-		}else {
-			return((no.getInfo().equals(info) || pertence(no.getFilhoEsquerda(), info) || pertence(no.getFilhoDireita(), info)));
-		}
-	}	
-	
+		
 	public int altura() {
 		return altura(this.raiz);
 	}
 	
-	private int altura(NoArvore raiz) 
-	    { 
+	private int altura(NoArvore raiz){ 
 	        if (raiz == null) {
 	        	return 0;	        	
 	        }
@@ -256,8 +268,10 @@ public class ArvoreBinariaComEncadeamento<T> {
                 }
                 else{ 
                     pilha.pop();                     
-                    vet[index] = (Integer) atual.getInfo();
-                    index++;
+                    if(atual.getInfo() != null) {
+                    	vet[index] = (Integer) atual.getInfo();
+                    	index++;                    	
+                    }
                 }    
             }  
             else if (atual.getFilhoEsquerda() == anterior)  
@@ -267,16 +281,18 @@ public class ArvoreBinariaComEncadeamento<T> {
                 }
                 else { 
                     pilha.pop(); 
-                    vet[index] = (Integer) atual.getInfo();
-                    index++;
+                    if(atual.getInfo() != null) {
+                    	vet[index] = (Integer) atual.getInfo();
+                    	index++;                    	
+                    }
                 }                   
             }  
-            else if (atual.getFilhoDireita() == anterior)  
-            { 
+            else if (atual.getFilhoDireita() == anterior){ 
                 pilha.pop(); 
-                //posOrdem +="<" + atual.getInfo() + ">";
-                vet[index] = (Integer) atual.getInfo();
-                index++;
+                if(atual.getInfo() != null) {
+                	vet[index] = (Integer) atual.getInfo();
+                	index++;                	
+                }
             }    
             anterior = atual; 
         } 
@@ -292,10 +308,11 @@ public class ArvoreBinariaComEncadeamento<T> {
 		
 		while (!nodes.isEmpty()) {
 		 NoArvore<?> atual= nodes.pop();
-		      //inPreOrdem += "<" + atual.getInfo() + ">";	      
 		 if(atual.getInfo() instanceof Number) {
-			 vet[idxAUX] = (Integer) atual.getInfo();
-			 idxAUX++;
+			 if(atual != null) {
+				 vet[idxAUX] = (Integer) atual.getInfo();
+				 idxAUX++;			 
+			 }
 		 }
 		      if (atual.getFilhoDireita()!= null) {
 		        nodes.push(atual.getFilhoDireita());
@@ -319,74 +336,16 @@ public class ArvoreBinariaComEncadeamento<T> {
                 atual = atual.getFilhoEsquerda(); 
             } 
             atual = pilha.pop();
-            //inOrdem += "<" + atual.getInfo() + ">";
             if(atual.getInfo() instanceof Number) {
-            	vet[idx] = (Integer) atual.getInfo();
-            	idx++;
+            	if(atual.getInfo() != null) {
+            		vet[idx] = (Integer) atual.getInfo();
+            		idx++;           		
+            	}
             }
             atual = atual.getFilhoDireita(); 
         }       
 		return vet;
-	}
-	 public void removerElemento(T info) 
-	    { 
-		 try {
-			 this.raiz = delete(this.raiz, info);			 
-		 }catch(Exception ex) {
-			 System.out.println("Elemento não encontrado");
-		 }
-	    } 
-	  
-	 public NoArvore delete(NoArvore raiz, T info) 
-	    { 
-	        if (raiz == null) {
-	        	return raiz; 
-	        }
-	  
-	        if(info instanceof Number) {	        	
-	        	if ((Integer) info < (Integer) raiz.getInfo()) {
-	        		raiz.setFilhoEsquerda(delete(raiz.getFilhoEsquerda(), info).getInfo());
-	        	}
-	        	else if ((Integer) info > (Integer) raiz.getInfo()) {
-	        		//root.right = deleteRec(root.right, key);
-	        		raiz.setFilhoDireita(delete(raiz.getFilhoDireita(), info).getInfo());	        		
-	        	}
-	        }
-	        else
-	        { 
-	            // node with only one child or no child 
-	            if (raiz.getFilhoEsquerda()== null) {
-	            	return raiz.getFilhoDireita();
-	            }
-	            else if (raiz.getFilhoDireita() == null) {
-	            	return raiz.getFilhoDireita();	            	
-	            }
-	            //root.key = minValue(root.right);
-	            raiz.setInfo(minValue(raiz.getFilhoDireita()));
-	  
-	            // Delete the inorder successor 
-	            //root.right = deleteRec(root.right, root.key);
-	            raiz.setFilhoDireita(delete(raiz.getFilhoDireita(), (T) raiz.getInfo()).getInfo());
-	        } 
-	  
-	        return raiz; 
-	    } 
-	  
-	    private Integer minValue(NoArvore raiz) 
-	    { 
-	        //int minv = root.key;
-	    	if(raiz.getInfo() instanceof Number) {
-	    		
-	    	Integer minv = (Integer) raiz.getInfo();
-	        	while (raiz.getFilhoEsquerda() != null) 
-	        	{ 
-	        		minv = (Integer) raiz.getFilhoEsquerda().getInfo(); 
-	        		raiz = raiz.getFilhoEsquerda(); 
-	        	} 
-	        return minv; 
-	    	}
-	    	return -1;
-	    } 
+	}	
 	
 	@Override
 	public String toString() {
