@@ -29,6 +29,14 @@ public class NoArvore<T> {
 	public void setFilhoDireita(T info) {
 		this.filhoDireita = new NoArvore<T>(info, null, null);
 	}
+	
+	public void setFilhoEsquerdaNo(NoArvore no) {
+		this.filhoEsquerda = no;
+	}
+	public void setFilhoDireitaNo(NoArvore no) {
+		this.filhoDireita = no;
+	}
+	
 	public void setInfo(T info) {
 		this.info = info;
 	}

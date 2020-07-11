@@ -3,7 +3,7 @@ import projetoFinalEstruturaDados.implementacaoComEncadeamento.*;
 
 public class ArvoreBinariaComEncadeamento<T> {
 	private NoArvore<?> raiz;
-	private int counter;	
+	public int counter;	
 	private static String toStringPorNivel;
 	public static Integer[] toStringPorNivelArray;
 	private static int idx = 0;
@@ -19,29 +19,44 @@ public class ArvoreBinariaComEncadeamento<T> {
 		return no;	
 	}
 	public void insereEmOrdem(T info) {
-		this.raiz = inserirEmOrdem(this.raiz, info);
+		if(counter > 1) {
+			inserirEmOrdem(this.raiz, info);
+		}else {
+			this.raiz = inserirEmOrdem(this.raiz, info);		
+			
+		}
+		this.counter++;
 	}
 	private NoArvore inserirEmOrdem(NoArvore raiz, T info) {
-        if (raiz == null) { 
-            raiz = new NoArvore(info, null, null);
-           // this.counter++;            
-            return raiz; 
-        }
-  
-        if(info instanceof Integer) {      	
-        	if ((Integer) info < (Integer) raiz.getInfo()) {        		
-        		raiz.setFilhoEsquerda(inserirEmOrdem(raiz.getFilhoEsquerda(), info).getInfo());       
-        		//this.counter++;
-        	}
-        	else if ((Integer) info > (Integer) raiz.getInfo()) {        		
-        		raiz.setFilhoDireita(inserirEmOrdem(raiz.getFilhoDireita(), info).getInfo());
-        		//this.counter++;
-        	}
-        }
-        this.counter++;
-        return raiz; 
+     
+	    NoArvore no = new NoArvore(info, null, null); 	   
+	    NoArvore x = raiz;  	   
+	    NoArvore y = null;  
+	    
+	    while (x != null) {  
+	        y = x;  
+	        if(info instanceof Integer) {	        	
+	        	if ((Integer) info < (Integer) x.getInfo()) {
+	        		x = x.getFilhoEsquerda();
+	        	}
+	        	else {
+	        		x = x.getFilhoDireita();
+	        	}	
+	        }
+	    } 
+	    if (y == null) {
+	    	y = no;
+	    	
+	    }	    
+	    else if ((Integer) info < (Integer) y.getInfo()) {
+	    	y.setFilhoEsquerdaNo(no);
+	    	
+	    }	    
+	    else {
+	    	y.setFilhoDireitaNo(no);
+	    }
+	    return y;  
 	}
-	
 	public T insere(T info){
 		caminharNiveis(info);
 		return info;
@@ -194,7 +209,8 @@ public class ArvoreBinariaComEncadeamento<T> {
 	        }
 	    return false;
 	       
-	}
+	}	
+	
 	
 	private String toStringEmOrdem() {
 		String inOrdem = "";
@@ -306,7 +322,65 @@ public class ArvoreBinariaComEncadeamento<T> {
         }       
 		return vet;
 	}
-	
+	 public void removerElemento(T info) 
+	    { 
+		 try {
+			 this.raiz = delete(this.raiz, info);			 
+		 }catch(Exception ex) {
+			 System.out.println("Elemento não encontrado");
+		 }
+	    } 
+	  
+	 public NoArvore delete(NoArvore raiz, T info) 
+	    { 
+	        if (raiz == null) {
+	        	return raiz; 
+	        }
+	  
+	        if(info instanceof Number) {	        	
+	        	if ((Integer) info < (Integer) raiz.getInfo()) {
+	        		raiz.setFilhoEsquerda(delete(raiz.getFilhoEsquerda(), info).getInfo());
+	        	}
+	        	else if ((Integer) info > (Integer) raiz.getInfo()) {
+	        		//root.right = deleteRec(root.right, key);
+	        		raiz.setFilhoDireita(delete(raiz.getFilhoDireita(), info).getInfo());	        		
+	        	}
+	        }
+	        else
+	        { 
+	            // node with only one child or no child 
+	            if (raiz.getFilhoEsquerda()== null) {
+	            	return raiz.getFilhoDireita();
+	            }
+	            else if (raiz.getFilhoDireita() == null) {
+	            	return raiz.getFilhoDireita();	            	
+	            }
+	            //root.key = minValue(root.right);
+	            raiz.setInfo(minValue(raiz.getFilhoDireita()));
+	  
+	            // Delete the inorder successor 
+	            //root.right = deleteRec(root.right, root.key);
+	            raiz.setFilhoDireita(delete(raiz.getFilhoDireita(), (T) raiz.getInfo()).getInfo());
+	        } 
+	  
+	        return raiz; 
+	    } 
+	  
+	    private Integer minValue(NoArvore raiz) 
+	    { 
+	        //int minv = root.key;
+	    	if(raiz.getInfo() instanceof Number) {
+	    		
+	    	Integer minv = (Integer) raiz.getInfo();
+	        	while (raiz.getFilhoEsquerda() != null) 
+	        	{ 
+	        		minv = (Integer) raiz.getFilhoEsquerda().getInfo(); 
+	        		raiz = raiz.getFilhoEsquerda(); 
+	        	} 
+	        return minv; 
+	    	}
+	    	return -1;
+	    } 
 	
 	@Override
 	public String toString() {
